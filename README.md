@@ -4,6 +4,21 @@ A reusable scaffold for building **persistent, compounding knowledge bases** wit
 
 This template is the distilled pattern — structure, conventions, automation, and a session discipline — with no subject content. Copy it, point your LLM at it, pick a topic, and start ingesting. The pattern itself is described in [`_meta/llm-wiki.md`](_meta/llm-wiki.md).
 
+## What WIKIllm adds to the original LLM-wiki idea
+
+WIKIllm builds on [Andrej Karpathy's LLM Wiki idea](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): immutable source material in `raw/`, an LLM-maintained `wiki/`, a schema file that tells the LLM how to work, and ingest / query / lint workflows with an index and a log. This project extends that foundation with tooling for long-lived, auditable wikis:
+
+- **Source change detection** -- `check_raw.py` keeps a SHA-256 baseline of `raw/`, so added, modified or removed sources are reported deterministically instead of noticed by memory.
+- **Source-grounded claims** -- a locator rule (load-bearing claims carry a quote or page/heading reference), quote verification (`verify_quotes.py`), heading-anchor suggestions (`suggest_anchors.py`), and a quarterly claim-faithfulness audit (`audit_claims.py`) that samples claims for re-checking against their sources.
+- **Explicit uncertainty and disagreement** -- a positions register where each load-bearing belief carries a status, the strongest counter-argument on file, and pre-registered "what would change our mind" criteria; sources that *agree* with a position must still record their strongest claim against it.
+- **Long-running maintenance** -- a session close-out protocol, an open-loops ledger for deferred work, `check_stale.py` for stale pages and due recurring tasks, and `maintenance_preflight.py` as a readiness gate before unattended maintenance.
+- **Structured data** -- optional one-note-per-datapoint records rendered as live Obsidian Bases tables.
+- **Large-corpus retrieval** -- an optional semantic-search layer over unread sources, with **Sweep** (corpus-wide thematic query) and **Promote** (pull a frequently-surfacing source into a full ingest).
+- **A reusable multi-wiki template** -- shared tooling flows from one trusted template checkout into each wiki through `sync_from_template.py`, which refuses to sync from a dirty, off-`main` or out-of-date source.
+- **Agent skills and workflows** -- Claude Code skills for ingest and maintenance, and multi-agent workflows for the claim audit and anchor backfill.
+- **Safe bulk repair** -- link repair (`fix_wikilinks.py`) with dry runs, restore, and a per-vault run lock against concurrent writers (see `docs/adr/`).
+- **Book and scanned-source ingestion** -- screen capture, OCR sidecars, capture verification, and a scanning guide ([`_meta/book-scanning.md`](_meta/book-scanning.md)).
+
 ## Quick start
 
 1. **Copy this template** to a new folder named for your topic (or use GitHub's "Use this template").
@@ -47,6 +62,8 @@ scripts/              automation (see scripts/README.md)
 
 Core scanners use Python 3.11+ and the standard library. Optional capture, OCR, model-assisted features, and workflow integrations have additional requirements; see [SETUP.md](SETUP.md). Run from the repo root.
 
+These are the main entry points. See [`scripts/README.md`](scripts/README.md) for the complete script and test inventory.
+
 | Script | Does |
 |---|---|
 | `check_raw.py` | Detects added/modified/removed files in `raw/` against a SHA-256 baseline, so source changes never slip by silently. |
@@ -85,7 +102,7 @@ The hard part of a knowledge base isn't reading or thinking — it's the bookkee
 
 ## Credit
 
-Built from the LLM-wiki pattern in [`_meta/llm-wiki.md`](_meta/llm-wiki.md). Related in spirit to Vannevar Bush's Memex — a personal, actively-curated knowledge store where the links between documents are as valuable as the documents. The part Bush couldn't solve was who does the maintenance. The LLM does.
+Built from [Andrej Karpathy's LLM Wiki idea](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f); this repository's working version of the pattern is in [`_meta/llm-wiki.md`](_meta/llm-wiki.md). Related in spirit to Vannevar Bush's Memex — a personal, actively-curated knowledge store where the links between documents are as valuable as the documents. The part Bush couldn't solve was who does the maintenance. The LLM does.
 
 ## Public snapshot
 
