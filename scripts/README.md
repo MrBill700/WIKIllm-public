@@ -70,7 +70,7 @@ hand-written companion note named after its PDF (`paper.md` beside `paper.pdf`) 
 matches rule 1 -- that is the accepted cost of catching `pdftotext`-style dumps; the
 warning asks for a deliberate accept, nothing more. ebook reader capture runs (`page_NNN.png` beside
 `run-manifest.json`, no PDF) and provenance notes (`PROVENANCE.md`) match neither rule;
-treating all 1,734 raw files across a multi-vault test set as ADDED flagged 0. A
+treating every file in a 1,734-file multi-vault test corpus as ADDED flagged 0. A
 **warning only**: it never blocks or changes `--accept`, since a render could in principle
 be the only copy of something -- that is a human call.
 
