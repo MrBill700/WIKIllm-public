@@ -1,0 +1,32 @@
+{
+  "_comment": "Ground truth for bench_links.py. CORE tier (expected/forbidden) = acceptance test; a production-worthy model should score near-perfect, so this tier saturating is fine. HARD tier (hard_expected/hard_forbidden) = model-ranking headroom, built so the 2026 best local model fails some; scored separately and expected to move as models improve. stretch = beyond the current script design (BODY_CAP window), reported but unscored. Fixture frozen at v2 (2026-07-09, hard tier added); do not edit pages, add tiers instead.",
+  "expected": [
+    ["wiki/analysis/training-review.md", "entities/coach-riley"],
+    ["wiki/analysis/training-review.md", "entities/lakeside-club"],
+    ["wiki/analysis/weekly-plan.md", "entities/garmin-watch"],
+    ["wiki/analysis/gear-notes.md", "entities/garmin-watch"],
+    ["wiki/analysis/gear-notes.md", "concepts/cadence"]
+  ],
+  "forbidden": {
+    "word-sense (schedule cadence vs running cadence)": ["wiki/analysis/training-review.md", "concepts/cadence"],
+    "substring (baseline/database must not match base)": ["wiki/analysis/training-review.md", "concepts/base"],
+    "alias-already-linked ([[the coach]] = coach-riley)": ["wiki/analysis/weekly-plan.md", "entities/coach-riley"],
+    "display-text ([[...|the cadence chapter]] is not a mention)": ["wiki/analysis/weekly-plan.md", "concepts/cadence"],
+    "ambiguous basename (two mercury pages -> dropped)": ["wiki/analysis/gear-notes.md", "concepts/mercury"],
+    "ambiguous basename planet variant": ["wiki/analysis/gear-notes.md", "entities/mercury"]
+  },
+  "hard_expected": {
+    "negated-but-referential (skips base = still about base)": ["wiki/analysis/next-season-plan.md", "concepts/base"],
+    "alias inference (innermost planet -> the planet page)": ["wiki/analysis/next-season-plan.md", "entities/mercury"],
+    "generic-alias reference (the coach = Riley)": ["wiki/analysis/next-season-plan.md", "entities/coach-riley"],
+    "quoted-title mention (\"Training Manual\" chapter)": ["wiki/analysis/next-season-plan.md", "sources/training-manual"]
+  },
+  "hard_forbidden": {
+    "idiom (base camp is not the base phase)": ["wiki/analysis/offseason-notes.md", "concepts/base"],
+    "speech cadence is not running cadence": ["wiki/analysis/offseason-notes.md", "concepts/cadence"],
+    "someone else's Garmin is not THE Garmin watch": ["wiki/analysis/offseason-notes.md", "entities/garmin-watch"]
+  },
+  "stretch": [
+    ["wiki/analysis/long-report.md", "entities/lakeside-club"]
+  ]
+}

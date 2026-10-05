@@ -1,0 +1,4 @@
+# Workflow scripts must be LF on disk: the Workflow tool rejects a script containing CR
+# ("script contains control characters"), and sync_from_template.py copies the working
+# tree, so a CRLF checkout (core.autocrlf=true) breaks Workflow({name}) in every vault.
+.claude/workflows/*.js text eol=lf

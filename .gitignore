@@ -1,0 +1,24 @@
+# Transient epub extraction cache (check_stale/extract_chapter)
+scripts/extracted/
+
+# Orphaned atomic-write temp files (editor / cloud-sync quirk)
+*.tmp.*
+
+# Python
+__pycache__/
+*.pyc
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# --- Source documents ---
+# raw/ sources are IGNORED by default: they are often copyrighted books,
+# private PDFs or large binaries. To version your sources, delete the two
+# lines below (raw/.gitkeep stays tracked either way).
+raw/*
+!raw/.gitkeep
+
+# Generated interactive graph (scripts/graph_export.py)
+knowledge-graph.html
+*.graph.html
